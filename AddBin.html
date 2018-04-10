@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Add Bin</title>
+</head>
+<body>
+  <h1>Add Bin</h1>
+  <div class="divTable">
+    <div class="divTableBody" id="tableBody">
+      <div class="divTableRow">
+        <div class="divTableCell">Bin ID:</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="Click to get new UUID" id="UUID" onclick='dataBaseRequest(dBase+"_uuids",updateUUID)'>
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Description:</div>
+        <div class="divTableCell">
+          <input type="text" id="description">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">
+          <input type="button" onclick="dimensions()" value="Add dimensions">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">
+          <input type="button" onclick="subsections()" value="Add sub-section" id="subSectionButton">
+        </div>
+      </div>
+    </div>
+  </div>
+  <datalist id="yesNo">
+    <option>yes</option>
+    <option>no</option>
+  </datalist>
+</body>
+<style>
+.divTable {
+  display: table;
+  width: 100%;
+}
+.divTableRow {
+  display: table-row;
+}
+.divTableHeading {
+  background-color: #EEE;
+  display: table-header-group;
+}
+.divTableCell, .divTableHead {
+  border: 0px solid #999999;
+  display: table-cell;
+  padding: 3px 10px;
+}
+.divTableHeading {
+  background-color: #EEE;
+  display: table-header-group;
+  font-weight: bold;
+}
+.divTableFoot {
+  background-color: #EEE;
+  display: table-footer-group;
+  font-weight: bold;
+}
+.divTableBody {
+  display: table-row-group;
+}
+.divTableCell:nth-child(1) {
+  text-align: right
+}
+.divTableCell .divTable .divTableRow .divTableCell{
+  text-align: left;
+}
+</style>
+<script id="newScript"></script>
+<script id="newScript2"></script>
+</html>
+<script>
+var fileName = location.href.split("/").slice(-1);
+//console.log(fileName);
+document.getElementById("newScript").src = fileName[0].replace(".html",".js");
+document.getElementById("newScript2").src = "script.js";
+</script>

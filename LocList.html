@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+</body>
+<script id="newScript"></script>
+</html>
+<script>
+var fileName = location.href.split("/").slice(-1);
+console.log(fileName);
+document.getElementById("newScript").src = fileName[0].replace(".html",".js");
+</script>

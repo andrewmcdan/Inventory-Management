@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Add Item to database</title>
+</head>
+
+<body>
+  <h1>Add Item</h1>
+  <div class="divTable">
+    <div class="divTableBody">
+      <div class="divTableRow">
+        <div class="divTableCell">Item ID:</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="Click to get new UUID" id="UUID" onclick='dataBaseRequest(dBase+"_uuids",updateUUID)'>
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Name:</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="What do you call this thing?" id="name">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Tags:</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="Comma seperated tags: camera, video, Black Magic Design, etc" id="tags" list="tagList" oninput="detectTagsAndUpdateTagList()" onchange="existingTagSelected()">
+        </div>
+        <div class="divTableCell">
+          <input type="text" id="selectedTags" disabled>
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Description:</div>
+        <div class="divTableCell">
+          <input type="text" id="description">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Number of items:</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="How many of this item are being added to the dBase? (default: 1)" id="addNum">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Full stock (amount):</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="How many are needed to be fully stocked? (default: 1)" id="fullStock">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Part Number:</div>
+        <div class="divTableCell">
+          <input type="text" id="partNum">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Website:</div>
+        <div class="divTableCell">
+          <input type="text" id="website">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Datasheet:</div>
+        <div class="divTableCell">
+          <input type="text" id="datasheet">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Size:</div>
+        <div class="divTableCell">
+          <input type="text" id="size">
+        </div>
+        <div class="divTableCell">
+          <input type="text" placeholder="unit" id="sizeUnit">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Style:</div>
+        <div class="divTableCell">
+          <input type="text" placeholder="PTH (pin through hole)" id="style" list="styleList">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Expiration Date:</div>
+        <div class="divTableCell">
+          <input type="date" id="expDate">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell">Category:</div>
+        <div class="divTableCell" id="category">
+          <select>
+            <option value="tools">Tools</option>
+            <option value="equipment">Equipment</option>
+            <option value="components">Components (LEDs, resistors, etc)</option>
+            <option value="kits">Kits</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="divTableRow">
+        <div class="divTableCell">Comments:</div>
+        <div class="divTableCell">
+          <input type="text"  id="comments">
+        </div>
+      </div>
+      <div class="divTableRow">
+        <div class="divTableCell"></div>
+        <div class="divTableCell">
+          <input type="submit" value="Create new item in DB" onclick="submitNewItemForm()">
+        </div>
+      </div>
+      <div class="divTableRow" id="associatedItemsViewer">
+        <div class="divTableCell"></div>
+        <div class="divTableCell">
+          <div class="divTable">
+            <div class="divTableBody"  id="associatedItemSubTable">
+              <div class="divTableRow">
+                <div class="divTableCell">
+                  <input type="text" id="itemIDToBeAssociated" placeholder = "Paste Item ID (_id) here and click the button ->">
+                </div>
+                <div class="divTableCell">
+                  <input type="text" id="itemAmountToBeAssociated" placeholder = "Number of new item that will be associated, default: 1">
+                </div>
+                <div class="divTableCell">
+                  <input type="submit" value="Associate this item" onclick="associateThisThing('item')">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="divTableRow" id="associatedProjectsViewer">
+        <div class="divTableCell"></div>
+        <div class="divTableCell">
+          <div class="divTable">
+            <div class="divTableBody"  id="associatedProjectSubTable">
+              <div class="divTableRow">
+                <div class="divTableCell">
+                  <input type="text" id="projectToBeAssociated" placeholder = "Paste Project ID (_id) here and click the button ->">
+                </div>
+                <div class="divTableCell">
+                  <input type="submit" value="Associate this Project" onclick="associateThisThing('project')">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <datalist id="tagList"></datalist>
+  <datalist id="styleList"></datalist>
+</body>
+<style>
+.divTable {
+  display: table;
+  width: 100%;
+}
+.divTableRow {
+  display: table-row;
+}
+.divTableHeading {
+  background-color: #EEE;
+  display: table-header-group;
+}
+.divTableCell, .divTableHead {
+  border: 0px solid #999999;
+  display: table-cell;
+  padding: 3px 10px;
+}
+.divTableHeading {
+  background-color: #EEE;
+  display: table-header-group;
+  font-weight: bold;
+}
+.divTableFoot {
+  background-color: #EEE;
+  display: table-footer-group;
+  font-weight: bold;
+}
+.divTableBody {
+  display: table-row-group;
+}
+.divTableCell:nth-child(1) {
+  text-align: right
+}
+.divTableCell .divTable .divTableRow .divTableCell{
+  text-align: left;
+}
+input {
+  width: 100%
+}
+
+
+///////////////////////////
+
+</style>
+<script id="newScript"></script>
+<script id="newScript2"></script>
+</html>
+<script>
+var fileName = location.href.split("/").slice(-1);
+//console.log(fileName);
+document.getElementById("newScript").src = fileName[0].replace(".html",".js");
+document.getElementById("newScript2").src = "script.js";
+</script>
